@@ -26,7 +26,8 @@ Hosted using AWS S3 static website hosting
 ## Screenshots
 
 ### Employee Portal
-![Employee Portal]("C:\Users\MANJUNATH\OneDrive\Desktop\project_1(images)\Employee_onboarding_portal.png")
+![Employee Portal]("<img width="1903" height="682" alt="HR_portal" src="https://github.com/user-attachments/assets/46f45c04-d5f6-48f0-bbb0-f8136c735f10" />")
 
 ### HR Dashboard
-![Dashboard]("C:\Users\MANJUNATH\OneDrive\Pictures\Screenshots\HR_portal.png")
+![Dashboard]("<img width="602" height="851" alt="Screenshot 2026-03-19 200240" src="https://github.com/user-attachments/assets/d7403964-b400-4a46-905e-51d9c90c753c" />")
+
