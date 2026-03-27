@@ -26,8 +26,10 @@ Hosted using AWS S3 static website hosting
 ## Screenshots
 
 ### Employee Portal
-![Employee Portal]("<img width="1903" height="682" alt="HR_portal" src="https://github.com/user-attachments/assets/46f45c04-d5f6-48f0-bbb0-f8136c735f10" />")
+<img width="602" height="851" alt="Screenshot 2026-03-19 200240" src="https://github.com/user-attachments/assets/c25525ad-81da-46f4-8f16-5fb3df208d56" />
+
 
 ### HR Dashboard
-![Dashboard]("<img width="602" height="851" alt="Screenshot 2026-03-19 200240" src="https://github.com/user-attachments/assets/d7403964-b400-4a46-905e-51d9c90c753c" />")
+<img width="1903" height="682" alt="HR_portal" src="https://github.com/user-attachments/assets/4767c89a-78e0-4ecc-a553-a8f4a6e4d828" />
+
 
