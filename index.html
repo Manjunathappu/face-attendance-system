@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Attendance</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #e0f2fe, #f8fafc);
+        }
+
+        header {
+            background: #1e293b;
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 12px;
+            border: 2px solid #ddd;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+
+        #preview img {
+            margin-top: 15px;
+            border-radius: 12px;
+            border: 2px solid #ccc;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .status-success {
+            color: green;
+        }
+
+        .status-error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    Face Recognition Attendance
+</header>
+
+<div class="container">
+
+    <video id="video" autoplay></video>
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <button onclick="captureImage()">📸 Mark Attendance</button>
+
+    <div id="preview"></div>
+    <p id="result"></p>
+
+</div>
+
+<script>
+
+const PRESIGNED_API = "https://your-api/presigned-url";
+const RESULT_API = "https://your-api/get-result";
+
+const video = document.getElementById("video");
+
+// Start camera
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(stream => video.srcObject = stream)
+.catch(() => {
+    document.getElementById("result").innerText = "❌ Camera access denied";
+});
+
+
+// Capture
+function captureImage() {
+
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    ctx.drawImage(video, 0, 0);
+
+    const imageData = canvas.toDataURL("image/jpeg");
+
+    document.getElementById("preview").innerHTML =
+        `<img src="${imageData}" width="200">`;
+
+    uploadToS3(imageData);
+}
+
+
+// Upload
+async function uploadToS3(base64Image) {
+
+    const resultEl = document.getElementById("result");
+    resultEl.innerText = "⏳ Uploading...";
+
+    const blob = await fetch(base64Image).then(res => res.blob());
+
+    const res = await fetch(PRESIGNED_API);
+    const { uploadURL, fileKey } = await res.json();
+
+    await fetch(uploadURL, {
+        method: "PUT",
+        body: blob
+    });
+
+    resultEl.innerText = "⏳ Processing...";
+
+    setTimeout(async () => {
+
+        const res2 = await fetch(RESULT_API + "?key=" + fileKey);
+        const data = await res2.json();
+
+        const time = new Date().toLocaleString();
+
+        resultEl.innerHTML =
+            `<span class="status-success">✅ ${data.name} | ${data.status} | ${time}</span>`;
+
+    }, 2000);
+}
+
+</script>
+
+</body>
+</html>
