@@ -19,7 +19,8 @@ This project is a **serverless, contactless attendance system** that uses facial
 
 ## 🏗️ Architecture
 
-![Architecture](docs/architecture.png)
+<img width="792" height="469" alt="Architecture_diag_Attendance_system" src="https://github.com/user-attachments/assets/54d09e4b-5bfa-4728-b2bb-e7ce4753086d" />
+
 
 ---
 
